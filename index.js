@@ -5,22 +5,19 @@ const axios = require('axios');
  require('dotenv').config();
 
 
-app.use(bodyParser.json());
+app.use(express.json());
 
-app.use(
-    bodyParser.urlencoded({extended:true})
-)
+app.use(express.urlencoded({extended:true}))
 console.log("https://api.telegram.org/bot"+process.env.TELEGRAM_API_TOKEN+"/sendMessage");
 
 app.post("/new-message",(req,res)=>{
     const {message} = req.body;
-
-    if(!message || message.text.toLowerCase().indexOf("marco")<0){
-        // if empty or no macro found in the lowercased of the message
-        return res.json({
-            msg:" the impotant keyword is missing "
-        })
-    }
+    // if(!message || !message.text || message.text.toLowerCase().indexOf("marco")<0){
+    //     // if empty or no macro found in the lowercased of the message
+    //     return res.json({
+    //         msg:" the impotant keyword is missing "
+    //     })
+    // }
     axios
     .post("https://api.telegram.org/bot"+process.env.TELEGRAM_API_TOKEN+"/sendMessage",{
         chat_id:message.chat.id,
@@ -33,11 +30,11 @@ app.post("/new-message",(req,res)=>{
     })
     .catch((err)=>{
         console.log("Error:",err);
-        res.end("Error:",err)
+        res.end("Error:")
     })
 
 })
 
-app.listen(8080,(req,res)=>{
+app.listen(8080,()=>{
     console.log("server started");
 })
