@@ -2,7 +2,7 @@ let express = require('express');
 let app = express();
 let bodyParser = require('body-parser');
 const axios = require('axios');
-const dotenv = require('dotenv').config();
+ require('dotenv').config();
 
 
 app.use(bodyParser.json());
@@ -10,6 +10,7 @@ app.use(bodyParser.json());
 app.use(
     bodyParser.urlencoded({extended:true})
 )
+console.log("https://api.telegram.org/bot"+process.env.TELEGRAM_API_TOKEN+"/sendMessage");
 
 app.post("/new-message",(req,res)=>{
     const {message} = req.body;
